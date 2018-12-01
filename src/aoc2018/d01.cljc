@@ -14,6 +14,6 @@
             (let [new-freq (+ freq n)]
               (if (contains? freqs new-freq)
                 (reduced new-freq)
-                [(conj freqs new-freq) new-freq])))
-          [#{} 0]
+                [(conj! freqs new-freq) new-freq])))
+          [(transient #{}) 0]
           (cycle numbers)))
