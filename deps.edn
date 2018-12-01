@@ -1,0 +1,3 @@
+{:deps {org.clojure/clojure {:mvn/version "1.10.0-RC2"}}
+ :aliases
+ {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-266"}}}}}
