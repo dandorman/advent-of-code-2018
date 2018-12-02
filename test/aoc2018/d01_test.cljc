@@ -1,4 +1,4 @@
-(ns d01-test
+(ns aoc2018.d01-test
   (:require [aoc2018.d01 :refer [input->vec solve-1 solve-2]]
             [clojure.test :refer [deftest is]]))
 
