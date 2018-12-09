@@ -16,6 +16,7 @@
     (is (= 374690 (solve 477 70851)))))
 
 
-(deftest part-2
-  (testing "input"
-    (is (= 3009951158 (solve 477 7085100)))))
+(comment ; this blows up CircleCI's memory limit
+  (deftest part-2
+    (testing "input"
+      (is (= 3009951158 (solve 477 7085100))))))
