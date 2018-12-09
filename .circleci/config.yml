@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: clojure/openjdk8-tools-deps-alpine
+      - image: clojure/openjdk-8-tools-deps-alpine
 
     working_directory: ~/repo
 
