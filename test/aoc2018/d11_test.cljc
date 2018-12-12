@@ -25,8 +25,6 @@
 (comment
   (deftest part-2
     (testing "example"
-      (is (= [90 269 16] (solve-2 18)))
-      #_(is (= [232 251 12] (solve-2 42))))
-    (comment
-      (testing "input"
-        (is (= [21 76] (solve-1 3031)))))))
+      (is (= [90 269 16] (solve-2 18))))
+    (testing "input"
+      (is (= [234 108 16] (solve-1 3031))))))
