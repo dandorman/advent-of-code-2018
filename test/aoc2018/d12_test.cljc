@@ -1,5 +1,5 @@
 (ns aoc2018.d12-test
-  (:require [aoc2018.d12 :refer [solve-1 solve-2]]
+  (:require [aoc2018.d12 :refer [solve solve-1]]
             [clojure.test :refer [deftest is testing]]))
 
 
@@ -62,3 +62,10 @@
     (is (= 325 (solve-1 example))))
   (testing "input"
     (is (= 2542 (solve-1 input)))))
+
+
+(comment
+  (deftest part-2
+    (testing "input"
+      ;; extrapolate for answer :)
+      (is (= 2550883 (solve 50000 input))))))

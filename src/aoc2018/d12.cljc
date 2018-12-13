@@ -1,27 +1,15 @@
 (ns aoc2018.d12
-  (:require [clojure.set :as set]
-            [clojure.string :as str]))
+  (:require [clojure.string :as str]))
 
 
 (defn parse-plants [input]
-  (let [[_ plant-str] (re-matches #"initial state: ([.#]+)" input)]
-    (reduce (fn [plants i]
-              (if (= \# (nth plant-str i))
-                (conj plants i)
-                plants))
-            (sorted-set)
-            (range (count plant-str)))))
+  (let [[_ plants] (re-matches #"initial state: ([.#]+)" input)]
+    plants))
 
 
 (defn parse-rule [rules input]
-  (let [[context-str _ result-str] (str/split input #" ")]
-    (assoc rules (reduce (fn [context i]
-                           (if (= \# (nth context-str i))
-                             (conj context (- i 2))
-                             context))
-                         (sorted-set)
-                         (range 5))
-                 (if (= result-str "#") true false))))
+  (let [[rule production] (str/split input #" => ")]
+    (assoc rules rule production)))
 
 
 (defn parse-input [input]
@@ -31,38 +19,40 @@
     {:rules rules, :plants plants}))
 
 
-(defn print-plants
-  ([plants]
-   (print-plants plants (apply min plants) (inc (apply max plants))))
-  ([plants start end]
-   (doseq [xs (partition-all 5 (range start end))]
-     (doseq [x xs]
-       (if (contains? plants x)
-         (print (if (zero? x) "0" "#"))
-         (print (if (zero? x) "_" "."))))
-     (print " "))
-   (println)))
+(def spacing "....")
 
 
-(defn next-gen [rules plants]
-  (persistent!
-    (reduce (fn [next-plants pot]
-              (let [pot-context (->> (range (- pot 2) (+ pot 3))
-                                     (into #{})
-                                     (set/intersection plants)
-                                     (map #(- % pot))
-                                     (into #{}))]
-                (if (get rules pot-context)
-                  (conj! next-plants pot)
-                  next-plants)))
-            (transient #{})
-            (range (- (apply min plants) 2)
-                   (+ (inc (apply max plants)) 3)))))
+(defn next-gen [rules [plants idx]]
+  (let [plants (str spacing plants spacing)]
+    (loop [new-plants ""
+           i 0]
+      (if (= i (- (count plants) 4))
+        (let [first-plant (str/index-of new-plants \#)
+              last-plant (str/last-index-of new-plants \#)]
+          [(subs new-plants first-plant (inc last-plant))
+           (+ idx (- first-plant 2))])
+        (recur (str new-plants (get rules (subs plants i (+ i 5)) "."))
+               (inc i))))))
+
+
+(defn score-plants [plants idx]
+  (reduce (fn [score i]
+            (if (= \# (nth plants i))
+              (+ score (+ idx i))
+              score))
+          0
+          (range (count plants))))
 
 
 (defn solve [generations input]
-  (let [{:keys [plants rules]} (parse-input input)]
-    (reduce + (nth (iterate (partial next-gen rules) plants) generations))))
+  (let [{:keys [rules plants]} (parse-input input)]
+    (loop [generation generations
+           plants plants
+           idx 0]
+      (if (zero? generation)
+        (score-plants plants idx)
+        (let [[plants new-idx] (next-gen rules [plants idx])]
+          (recur (dec generation) plants new-idx))))))
 
 
 (def solve-1 (partial solve 20))
