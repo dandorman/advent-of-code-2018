@@ -30,4 +30,7 @@ jobs:
           key: v2-dependencies-{{ checksum "deps.edn" }}
 
       # run tests!
-      - run: bin/kaocha
+      - run: mkdir -p test-results/kaocha
+      - run: bin/kaocha --plugin kaocha.plugin/junit-xml --junit-xml-file junit.xml --plugin kaocha.plugin/profiling
+      - store_test_results:
+          path: test-results

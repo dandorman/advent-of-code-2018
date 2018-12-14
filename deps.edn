@@ -1,4 +1,5 @@
-{:deps {org.clojure/clojure {:mvn/version "1.10.0-RC4"}
+{:deps {org.clojure/clojure {:mvn/version "1.10.0-RC5"}
         net.mikera/core.matrix {:mvn/version "0.62.0"}}
  :aliases
- {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-305"}}}}}
+ {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-319"}
+                      lambdaisland/kaocha-junit-xml {:mvn/version "0.0-43"}}}}}
