@@ -1,4 +1,5 @@
 {:deps {org.clojure/clojure {:mvn/version "1.10.0-RC5"}
+        org.clojure/core.match {:mvn/version "0.3.0-alpha5"}
         net.mikera/core.matrix {:mvn/version "0.62.0"}}
  :aliases
  {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "0.0-319"}
